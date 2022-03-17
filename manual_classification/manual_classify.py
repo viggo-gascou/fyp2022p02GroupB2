@@ -12,6 +12,9 @@ def benign():
     global img
     # Modify benign value for image in the data frame
     df.loc[df["img"] == img_names[i], "benign"] = True
+    if i >= 89:
+        save_exit()
+        return
     i += 1
     # Chanching the image of the canvas' image container
     img = ImageTk.PhotoImage(Image.open(img_path + img_names[i]))
@@ -25,6 +28,9 @@ def melanoma():
     global img
     # Modify benign value for image in the data frame
     df.loc[df["img"] == img_names[i], "melanoma"] = True
+    if i >= 89:
+        save_exit()
+        return
     i += 1
     # Chanching the image of the canvas' image container
     img = ImageTk.PhotoImage(Image.open(img_path + img_names[i]))
@@ -38,6 +44,9 @@ def keratosis():
     global img
     # Modify benign value for image in the data frame
     df.loc[df["img"] == img_names[i], "keratosis"] = True
+    if i >= 89:
+        save_exit()
+        return
     i += 1
     # Chanching the image of the canvas' image container
     img = ImageTk.PhotoImage(Image.open(img_path + img_names[i]))
