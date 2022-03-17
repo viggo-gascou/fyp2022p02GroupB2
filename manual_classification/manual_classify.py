@@ -1,7 +1,7 @@
 import tkinter as tk
 import pandas as pd
 from tkinter import ttk
-from os import makedirs
+from os import makedirs, listdir
 from PIL import Image, ImageTk
 
 
@@ -66,17 +66,30 @@ print("1: Gustav\n2: Magnus\n3: Marie\n4: Viggo\n5: Frida")
 num = int(input("choice: "))
 name = names[num - 1]
 
+print(
+    f"\nHi {name.title()}, you will now be taken through the images you have been chosen to rate."
+)
+print("Once you have gone through all the pictures, your results will be saved.")
+print("Should you have to exit early, you can choose to save and exit.")
+print("If you have previously quite prematurely, you can now choose to start from any")
+print(
+    "image index of your choice, otherwise start from index 0 if it is your first time."
+)
+# Current index in image list
+i = int(input("Start from index (0-89): "))
+
 # Image directory path and load image name list
 img_path = "../resized_data/example_image/"
 with open("buckets/" + name + "_bucket.txt") as f:
     img_names = f.read().split()
 # Create data frame for classification results
-df = pd.DataFrame(img_names, columns=["img"])
-df["benign"] = False
-df["melanoma"] = False
-df["keratosis"] = False
-# Current index in image list
-i = 0
+if name + "_classification.csv" in listdir("classifications") and i > 0:
+    df = pd.read_csv("classifications/" + name + "_classification.csv", index_col=0)
+else:
+    df = pd.DataFrame(img_names, columns=["img"])
+    df["benign"] = False
+    df["melanoma"] = False
+    df["keratosis"] = False
 # Create window frame and set geometry
 root = tk.Tk()
 root.title("Manual Classification")
