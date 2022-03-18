@@ -5,46 +5,17 @@ from os import makedirs, listdir
 from PIL import Image, ImageTk
 
 
-def benign():
+def update_image(type):
+    """Saves choice of diagnosis in data frame and changes picture to the
+    next picture in the list"""
     # Using global variable i to modify that value outside the function
     global i
     # Modifying global variable img so the image isn't garbage collected
     global img
     # Modify benign value for image in the data frame
-    df.loc[df["img"] == img_names[i], "benign"] = True
-    if i >= 89:
-        save_exit()
-        return
-    i += 1
-    # Chanching the image of the canvas' image container
-    img = ImageTk.PhotoImage(Image.open(img_path + img_names[i]))
-    canvas.itemconfig(img_container, image=img)
-
-
-def melanoma():
-    # Using global variable i to modify that value outside the function
-    global i
-    # Modifying global variable img so the image isn't garbage collected
-    global img
-    # Modify benign value for image in the data frame
-    df.loc[df["img"] == img_names[i], "melanoma"] = True
-    if i >= 89:
-        save_exit()
-        return
-    i += 1
-    # Chanching the image of the canvas' image container
-    img = ImageTk.PhotoImage(Image.open(img_path + img_names[i]))
-    canvas.itemconfig(img_container, image=img)
-
-
-def keratosis():
-    # Using global variable i to modify that value outside the function
-    global i
-    # Modifying global variable img so the image isn't garbage collected
-    global img
-    # Modify benign value for image in the data frame
-    df.loc[df["img"] == img_names[i], "keratosis"] = True
-    if i >= 89:
+    df.loc[df["img"] == img_names[i], type] = True
+    # Ends the script if the end of the list is reached
+    if i >= len(img_names) - 1:
         save_exit()
         return
     i += 1
@@ -54,18 +25,22 @@ def keratosis():
 
 
 def save_exit():
+    # Saves the results to a csv file and exits the tkinter loop
     df.to_csv("classifications/" + name + "_classification.csv")
     root.quit()
 
 
+# Makes the ./classifications directory if it does not exist
 makedirs("classifications", exist_ok=True)
 
+# Select name to choose the bucket of pictures for the corresponding person
 names = ["gustav", "magnus", "marie", "viggo", "frida"]
 print("Input the number corresponding to the name of the person classifying images")
 print("1: Gustav\n2: Magnus\n3: Marie\n4: Viggo\n5: Frida")
 num = int(input("choice: "))
 name = names[num - 1]
 
+# Print instructions
 print(
     f"\nHi {name.title()}, you will now be taken through the images you have been chosen to rate."
 )
@@ -83,6 +58,7 @@ img_path = "../resized_data/example_image/"
 with open("buckets/" + name + "_bucket.txt") as f:
     img_names = f.read().split()
 # Create data frame for classification results
+# New data frame if one does not exist for this person already or they choose to start over
 if name + "_classification.csv" in listdir("classifications") and i > 0:
     df = pd.read_csv("classifications/" + name + "_classification.csv", index_col=0)
 else:
@@ -90,6 +66,7 @@ else:
     df["benign"] = False
     df["melanoma"] = False
     df["keratosis"] = False
+
 # Create window frame and set geometry
 root = tk.Tk()
 root.title("Manual Classification")
@@ -109,15 +86,21 @@ canvas.pack()
 img = ImageTk.PhotoImage(Image.open(img_path + img_names[i]))
 # Create buttons
 benign_button = ttk.Button(
-    root, style="Accentbutton", text="Benign", command=lambda: benign()
+    root, style="Accentbutton", text="Benign", command=lambda: update_image("benign")
 )
 benign_button.pack(side=tk.LEFT, ipadx=5, ipady=5, expand=True)
 melanoma_button = ttk.Button(
-    root, style="Accentbutton", text="Melanoma", command=lambda: melanoma()
+    root,
+    style="Accentbutton",
+    text="Melanoma",
+    command=lambda: update_image("melanoma"),
 )
 melanoma_button.pack(side=tk.LEFT, ipadx=5, ipady=5, expand=True)
 keratosis_button = ttk.Button(
-    root, style="Accentbutton", text="Keratosis", command=lambda: keratosis()
+    root,
+    style="Accentbutton",
+    text="Keratosis",
+    command=lambda: update_image("keratosis"),
 )
 keratosis_button.pack(side=tk.LEFT, ipadx=5, ipady=5, expand=True)
 exit_button = ttk.Button(
