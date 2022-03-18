@@ -22,5 +22,5 @@ except FileNotFoundError:
 mkdir("buckets")
 names = ["gustav", "magnus", "marie", "viggo", "frida"]
 for name, bucket in zip(names, buckets):
-    with open(name + "_bucket.txt", "w") as f:
+    with open("buckets/" + name + "_bucket.txt", "w") as f:
         f.write(" ".join(bucket))
