@@ -3,6 +3,7 @@ from shutil import rmtree
 
 
 img_names = listdir("../resized_data/example_image_resized")
+img_names.sort()
 indices = [i for i in range(0, 451, 90)]
 indices = list(map(lambda x: x % 150, indices))
 
