@@ -26,7 +26,7 @@ def update_image(type):
 
 def save_exit():
     # Saves the results to a csv file and exits the tkinter loop
-    df.to_csv("classifications/" + name + "_classification.csv")
+    df.to_csv("classifications/" + name + "_classification.csv", index = False)
     root.quit()
 
 
