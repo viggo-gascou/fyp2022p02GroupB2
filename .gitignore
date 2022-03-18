@@ -132,3 +132,6 @@ dmypy.json
 
 # Test image data
 fyp2022-imaging
+
+# Raw data
+data_to_resize
