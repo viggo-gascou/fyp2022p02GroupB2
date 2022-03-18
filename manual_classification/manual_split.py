@@ -2,7 +2,7 @@ from os import listdir, mkdir
 from shutil import rmtree
 
 
-img_names = listdir("../resized_data/example_image")
+img_names = listdir("../resized_data/example_image_resized")
 indices = [i for i in range(0, 451, 90)]
 indices = list(map(lambda x: x % 150, indices))
 
@@ -21,5 +21,5 @@ except FileNotFoundError:
 mkdir("buckets")
 names = ["gustav", "magnus", "marie", "viggo", "frida"]
 for name, bucket in zip(names, buckets):
-    with open("buckets/" + name + "_bucket.txt", "w") as f:
+    with open(name + "_bucket.txt", "w") as f:
         f.write(" ".join(bucket))
