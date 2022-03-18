@@ -54,7 +54,7 @@ print(
 i = int(input("Start from index (0-89): "))
 
 # Image directory path and load image name list
-img_path = "../resized_data/example_image/"
+img_path = "../resized_data/example_image_resized/"
 with open("buckets/" + name + "_bucket.txt") as f:
     img_names = f.read().split()
 # Create data frame for classification results
