@@ -60,7 +60,7 @@ with open("buckets/" + name + "_bucket.txt") as f:
 # Create data frame for classification results
 # New data frame if one does not exist for this person already or they choose to start over
 if name + "_classification.csv" in listdir("classifications") and i > 0:
-    df = pd.read_csv("classifications/" + name + "_classification.csv", index_col=0)
+    df = pd.read_csv("classifications/" + name + "_classification.csv")
 else:
     df = pd.DataFrame(img_names, columns=["img"])
     df["benign"] = False
