@@ -33,5 +33,5 @@ else:
             mkdir(resized_path)
             for img_name in tqdm(img_names):
                 img = Image.open(path + "/" + img_name)
-                img.thumbnail((600, 600))
+                img.thumbnail((600, 600), resample=False)
                 img.save(resized_path + img_name)
