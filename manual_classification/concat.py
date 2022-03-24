@@ -5,7 +5,7 @@ from PIL import Image
 
 # Member and feature names for accessing files and columns in dfs
 names = ["gustav", "magnus", "marie", "viggo", "frida"]
-features = ["benign", "melanoma", "keratosis"]
+features = ["benign", "melanoma", "keratosis", "assymetry", "border", "color"]
 # Load all manual classifiaction csv files
 name_dfs = [pd.read_csv(f"classifications/{name}_classification.csv") for name in names]
 # List all 150 images and make a df with them

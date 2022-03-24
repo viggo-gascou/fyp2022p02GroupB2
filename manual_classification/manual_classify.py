@@ -13,7 +13,13 @@ def update_image(type):
     # Modifying global variable img so the image isn't garbage collected
     global img
     # Modify benign value for image in the data frame
-    df.loc[df["img"] == img_names[i], type] = True
+    df.loc[df["img"] == img_names[i], type] = 1
+    assymetry = int(input("Assymetry rating (0-10): "))
+    df.loc[df["img"] == img_names[i], "assymetry"] = assymetry
+    border = int(input("Border rating (0-10): "))
+    df.loc[df["img"] == img_names[i], "border"] = border
+    color = int(input("Color rating (0-10): "))
+    df.loc[df["img"] == img_names[i], "color"] = color
     # Ends the script if the end of the list is reached
     if i >= len(img_names) - 1:
         save_exit()
@@ -26,7 +32,7 @@ def update_image(type):
 
 def save_exit():
     # Saves the results to a csv file and exits the tkinter loop
-    df.to_csv("classifications/" + name + "_classification.csv", index = False)
+    df.to_csv("classifications/" + name + "_classification.csv", index=False)
     root.quit()
 
 
@@ -63,9 +69,12 @@ if name + "_classification.csv" in listdir("classifications") and i > 0:
     df = pd.read_csv("classifications/" + name + "_classification.csv")
 else:
     df = pd.DataFrame(img_names, columns=["img"])
-    df["benign"] = False
-    df["melanoma"] = False
-    df["keratosis"] = False
+    df["benign"] = 0
+    df["melanoma"] = 0
+    df["keratosis"] = 0
+    df["assymetry"] = 0
+    df["border"] = 0
+    df["color"] = 0
 
 # Create window frame and set geometry
 root = tk.Tk()
