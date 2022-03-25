@@ -135,3 +135,7 @@ fyp2022-imaging
 
 # Raw data
 data_to_resize
+
+# Flake8
+flake8
+tox.ini

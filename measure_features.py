@@ -1,8 +1,11 @@
 import pandas as pd
-import os
 from tqdm import tqdm
 from scripts.areaperimiter import measure
 from scripts.color_features import color_features
+<<<<<<< HEAD
+=======
+from scripts.color_score import color_score
+>>>>>>> 3bd95e79fd09803f094e6ccc5e86858f773b1cdc
 from math import pi
 
 
@@ -22,6 +25,7 @@ df["compactness"] =  ((4 * pi) * df["area"]) / df["perimiter"] ** 2
 
 color_dist = []
 color_sd = []
+color_scores = []
 print("Measuring color features...")
 for img in tqdm(df["image_id"]):
     img_file = img_path + img + ".jpg"
@@ -29,6 +33,7 @@ for img in tqdm(df["image_id"]):
     dist, sd = color_features(img_file, seg_file)
     color_dist.append(dist)
     color_sd.append(sd)
-df["color_dist"], df["color_sd"] = color_dist, color_sd
-
+    color_scores.append(color_score(img_file, seg_file))
+df["color_dist"], df["color_sd"], df["color_score"] = color_dist, color_sd, color_scores
 df.to_csv("features/features.csv", index=False)
+
