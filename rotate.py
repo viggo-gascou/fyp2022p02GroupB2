@@ -46,6 +46,7 @@ def degrees_to_rotate(image):
     img_rotated = img_rotated[min_x:max_x + 1, min_y:max_y + 1]
     return img_rotated
 
+
 def main():
     try:
         rmtree("rotated_data")
