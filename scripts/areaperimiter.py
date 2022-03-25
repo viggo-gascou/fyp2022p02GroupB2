@@ -13,3 +13,4 @@ def measure(seg_file):
                 perimiter += 1
     area = np.sum(img)
     return (area, perimiter)
+
