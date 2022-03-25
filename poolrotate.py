@@ -7,27 +7,16 @@ from PIL import Image
 from skimage import transform
 from skimage.filters import gaussian
 from tqdm.contrib.concurrent import process_map
-from multiprocessing import Pool, Manager
-from itertools import repeat
-from tqdm import tqdm
 
 
-def height(img, deg):
-    rot_img = transform.rotate(img, deg)
-    col_heights = np.sum(rot_img, axis=0)
-    max_height = np.max(col_heights)
-    return max_height
-
-
-def wrapper_height(tup):
-    return height(*tup)
+# This script uses a lot of memory, especially for larger pictures
 
 
 def rotate(img):
     '''
-    Input: Masked image
-    Returns which degrees an image should be rotated, in order to be able to fold it as
-    "symmestrically" as possible . Returns the degree.
+    Takes segmentation mask array as input, determines the best rotation degree
+    for the segmentation for it to be folded as "symetrically" as possible.
+    Return the rotated array
     '''
     max_height = 0
     max_deg = 0
@@ -66,19 +55,15 @@ def rotate(img):
     return img_rot
 
 
-def rotate_to_pil(img, img_name):
+def rotate_to_pil(img_name):
+    "Takes an image name as argument and reads, rotates and saves the image"
+    img = plt.imread(path + img_name)
     img = rotate(img)
     img = Image.fromarray(np.uint8(img * 255))
     img.save(rot_path + img_name)
 
 
-def pool_wrap(AL, IL, i):
-    rotate_to_pil(AL[i], IL[i])
-
-
-def pbar_wrap(tup):
-    pool_wrap(*tup)
-
+# Has to be outside the if __name__ == '__main__' for processes to access
 
 # path = "resized_data/example_segmentation_resized/"
 # rot_path = "rotated_data/example_segmentation_rotated/"
@@ -86,22 +71,19 @@ path = "fullsize_segmentation/"
 rot_path = "rotated_data/example_segmentation_fullsize_rotated/"
 
 if __name__ == '__main__':
-    img_arrs = []
-    img_names = []
+    # Remove the target directory if it exists and create it again to start
+    # with an empty directory
     try:
         rmtree(rot_path)
     except FileNotFoundError:
         pass
     makedirs(rot_path, exist_ok=True)
     start = perf_counter()
+    # Read the file names in the input path, excluding hidden files
     img_names = [file for file in listdir(path) if file[0] != "."]
-    img_files = [path + img for img in img_names]
-    img_arrs = [plt.imread(img) for img in img_files]
-
-    with Manager() as manager:
-        img_arrs = manager.list(img_arrs)
-        img_names = manager.list(img_names)
-        process_map(pbar_wrap, list(zip(repeat(img_arrs, 150), repeat(img_names, 150), list(range(150)))))
+    # Rotate and save all images in the directory, using a multiprocessing
+    # pool map with progress bar
+    process_map(rotate_to_pil, img_names)
 
     end = perf_counter()
     print(end - start)
