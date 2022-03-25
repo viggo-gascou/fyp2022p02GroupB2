@@ -2,10 +2,7 @@ import pandas as pd
 from tqdm import tqdm
 from scripts.areaperimiter import measure
 from scripts.color_features import color_features
-<<<<<<< HEAD
-=======
 from scripts.color_score import color_score
->>>>>>> 3bd95e79fd09803f094e6ccc5e86858f773b1cdc
 from math import pi
 
 
@@ -36,4 +33,3 @@ for img in tqdm(df["image_id"]):
     color_scores.append(color_score(img_file, seg_file))
 df["color_dist"], df["color_sd"], df["color_score"] = color_dist, color_sd, color_scores
 df.to_csv("features/features.csv", index=False)
-
