@@ -46,6 +46,7 @@ def degrees_to_rotate(image):
     img_rotated = img_rotated[min_x:max_x + 1, min_y:max_y + 1]
     return img_rotated
 
+
 def main():
     try:
         rmtree("rotated_data")
@@ -54,7 +55,7 @@ def main():
     mkdir("rotated_data")
     path = "resized_data/example_segmentation_resized"
     img_names = [file for file in listdir(path) if file[0] != "."]
-    rotated_path = f"rotated_data/example_segmentation_rotated/"
+    rotated_path = "rotated_data/example_segmentation_rotated/"
     mkdir(rotated_path)
     for img_name in tqdm(img_names):
         img = plt.imread(path + "/" + img_name)
