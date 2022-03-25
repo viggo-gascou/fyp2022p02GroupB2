@@ -24,6 +24,7 @@ def degrees_to_rotate(image):
     max_height = 0 
     degrees = 0
     for i in range(5, 181, 5):
+        # Rotate image in intervals of 5 degrees and save max height.
         height_mask = transform.rotate(image, i)
         pixels_in_col = np.sum(height_mask, axis=0)
         max_pixels_in_col = np.max(pixels_in_col)
@@ -31,10 +32,18 @@ def degrees_to_rotate(image):
             max_height = max_pixels_in_col
             degrees = i 
 
+    # Add padding to image before rotating to ensure entire skin lesion stays in frame. 
+    shape = image.shape
+    width_add, height_add = int(shape[0]*0.25), int(shape[1]*0.25)
+    image = np.pad(image, (width_add,height_add), constant_values=(0,0))
+
+    # Rotate image 
     img_rotated = transform.rotate(image, degrees)
+    # Mask where skin lesion is, find corners to crop image close to lesion. 
     white_mask = np.where(img_rotated == 1)
     max_x, min_x = max(white_mask[0]), min(white_mask[0])
     max_y, min_y = max(white_mask[1]), min(white_mask[1])
+    # Crop image 
     img_rotated = img_rotated[min_x:max_x + 1, min_y:max_y + 1]
     return img_rotated
 
