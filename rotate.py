@@ -20,6 +20,11 @@ def degrees_to_rotate(image):
     Returns which degrees an image should be rotated, in order to be able to fold it as 
     "symmestrically" as possible . Returns the degree.
     '''
+    # Add padding to image before rotating to ensure entire skin lesion stays in frame. 
+    shape = image.shape
+    width_add, height_add = int(shape[0]*0.25), int(shape[1]*0.25)
+    image = np.pad(image, (width_add,height_add), constant_values=(0,0))
+
     max_height = 0 
     degrees = 0
     for i in range(5, 181, 5):
@@ -30,11 +35,6 @@ def degrees_to_rotate(image):
         if max_pixels_in_col > max_height:
             max_height = max_pixels_in_col
             degrees = i 
-
-    # Add padding to image before rotating to ensure entire skin lesion stays in frame. 
-    shape = image.shape
-    width_add, height_add = int(shape[0]*0.25), int(shape[1]*0.25)
-    image = np.pad(image, (width_add,height_add), constant_values=(0,0))
 
     # Rotate image 
     img_rotated = transform.rotate(image, degrees)
@@ -52,9 +52,10 @@ def main():
     except FileNotFoundError:
         pass
     mkdir("rotated_data")
+    # path = "fullsize_segmentation"
     path = "resized_data/example_segmentation_resized"
     img_names = [file for file in listdir(path) if file[0] != "."]
-    rotated_path = f"rotated_data/example_segmentation_rotated/"
+    rotated_path = "rotated_data/example_segmentation_resized_rotated/"
     mkdir(rotated_path)
     for img_name in tqdm(img_names):
         img = plt.imread(path + "/" + img_name)
