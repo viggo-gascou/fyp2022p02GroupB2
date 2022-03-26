@@ -4,15 +4,10 @@ from scipy.ndimage import convolve
 
 
 def measure(seg_file):
-    perimiter = 0
+    perimeter = 0
     img = np.pad(plt.imread(seg_file), 2)
-    kernel = np.array([[0, -1, 0], [-1, 4, -1], [0, -1, 0]])
-    perimiter = len(np.where(convolve(img, kernel) < 0)[0])
-    # for x1, x2 in zip(range(img.shape[0] - 1), range(3, img.shape[0] - 1)):
-    #     for y1, y2 in zip(range(img.shape[1] - 1), range(3, img.shape[1] - 1)):
-    #         view = img[x1:x2, y1:y2]
-    #         if view[1, 1] and np.sum(view) < 9:
-    #             perimiter += 1
+    kernel = np.array([[-1, -1, 0], [-1, 8, -1], [-1, -1, -1]])
+    perimeter = len(np.where(convolve(img, kernel) < 0)[0])
     area = np.sum(img)
-    return (area, perimiter)
+    return (area, perimeter)
 
