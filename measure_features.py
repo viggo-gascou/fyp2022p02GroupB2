@@ -11,14 +11,14 @@ seg_path = "resized_data/example_segmentation_resized/"
 df = pd.read_csv("data/example_ground_truth.csv")[["image_id", "melanoma"]]
 
 area = []
-perimiter = []
-print("Measuring area and perimiter...")
+perimeter = []
+print("Measuring area and perimeter...")
 for img in tqdm(df["image_id"]):
     a, p = measure(seg_path + img + "_segmentation.png")
     area.append(a)
-    perimiter.append(p)
-df["area"], df["perimiter"] = area, perimiter
-df["compactness"] = ((4 * pi) * df["area"]) / df["perimiter"] ** 2
+    perimeter.append(p)
+df["area"], df["perimeter"] = area, perimeter
+df["compactness"] = ((4 * pi) * df["area"]) / df["perimeter"] ** 2
 
 color_dist = []
 color_sd = []
