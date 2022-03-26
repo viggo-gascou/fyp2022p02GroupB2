@@ -1,8 +1,8 @@
 import pandas as pd
 from tqdm import tqdm
-from scripts.areaperimiter import measure
-from scripts.color_features import color_features
-from scripts.color_score import color_score
+from functions.areaperimiter import measure
+from functions.color_features import color_features
+from functions.color_score import color_score
 from math import pi
 
 
@@ -18,7 +18,7 @@ for img in tqdm(df["image_id"]):
     area.append(a)
     perimiter.append(p)
 df["area"], df["perimiter"] = area, perimiter
-df["compactness"] =  ((4 * pi) * df["area"]) / df["perimiter"] ** 2
+df["compactness"] = ((4 * pi) * df["area"]) / df["perimiter"] ** 2
 
 color_dist = []
 color_sd = []
