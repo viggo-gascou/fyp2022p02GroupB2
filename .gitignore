@@ -139,3 +139,6 @@ data_to_resize
 # Flake8
 flake8
 tox.ini
+
+# Local Project Tex Files
+overleaf
