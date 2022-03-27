@@ -1,16 +1,16 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy.ndimage import convolve
 import math
-from PIL import Image
+from skimage import transform
 from skimage.segmentation import slic
+from skimage.filters import gaussian
 
 
-def measure(seg_file):
+def area_perimeter(seg):
     """Measures the area and perimiter of a segmentation mask with the given path"""
     perimeter = 0
     # Pad the image, in case the mask extends to the edge of the image
-    img = np.pad(plt.imread(seg_file), 3)
+    img = np.pad(seg, 3)
     # Kernel for finding edges in the mas
     kernel = np.array([[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]])
     # Convolve image and kernel, resulting in an array where the edge pixels all
@@ -26,11 +26,9 @@ def segment_colors(img, mask):
        to the image and segments the lesion into 10 zones by colour. Calculates
        the average color for each zone and returns an array of these values."""
     # Convert image to array and segment into 10 segments using simgma=5
-    img_arr = np.array(img, dtype=float)
-    segments = slic(img_arr, n_segments=10, sigma=5, mask=mask)
+    segments = slic(img, n_segments=10, sigma=5, mask=mask)
     # Find the mean RGB values of each segment and stack into one array
-    avg_color = np.vstack([np.round(
-        np.mean(img_arr[segments == s], axis=0)) for s in np.unique(segments)])
+    avg_color = np.vstack([np.mean(img[segments == s], axis=0) for s in np.unique(segments)])
     # If there is an entry with mean color pure black, remove it
     avg_color = avg_color[np.where((avg_color != (0, 0, 0)).all(axis=1))]
     return avg_color
@@ -48,7 +46,7 @@ def avg_color_dist(color_arr):
     return sum(distances) / len(distances)
 
 
-def color_features(img, mask):
+def color_dist_sd(img, mask):
     avg_color = segment_colors(img, mask)
     avg_dist = avg_color_dist(avg_color)
     # Computes standard deviation of each channel of R, G and B
@@ -57,13 +55,11 @@ def color_features(img, mask):
 
 
 def color_score(img):
-    # Convert image to array with RGB values between [0, 1]
-    img_arr = np.array(img) / 255
     # Remove all black pixels
-    lesion = img_arr[np.where(~(
-        (img_arr[:, :, 0] == 0)
-        & (img_arr[:, :, 1] == 0)
-        & (img_arr[:, :, 2] == 0))
+    lesion = img[np.where(~(
+        (img[:, :, 0] == 0)
+        & (img[:, :, 1] == 0)
+        & (img[:, :, 2] == 0))
     )]
     # Count non-black pixels in lesion
     pixels = len(lesion)
@@ -100,3 +96,59 @@ def color_score(img):
         if len(lesion[mask]) / pixels > 0.05:
             color_count += 1
     return color_count
+
+
+def rotate(img):
+    '''
+    Takes segmentation mask array as input, determines the best rotation degree
+    for the segmentation for it to be folded as "symetrically" as possible.
+    Return the rotated array
+    '''
+    max_height = 0
+    max_deg = 0
+
+    # Add padding to image before rotating to ensure entire skin lesion stays in frame.
+    shape = img.shape
+    width_add, height_add = int(shape[0] * 0.25), int(shape[1] * 0.25)
+    image = np.pad(img, (width_add, height_add), constant_values=(0, 0))
+
+    for i in range(5, 181, 5):
+        # Rotate image in intervals of 5 degrees and save max height.
+        height_mask = transform.rotate(image, i)
+        pixels_in_col = np.sum(height_mask, axis=0)
+        max_pixels_in_col = np.max(pixels_in_col)
+        if max_pixels_in_col > max_height:
+            max_height = max_pixels_in_col
+            max_deg = i
+
+    # Rotate image
+    img_rot = transform.rotate(image, max_deg)
+
+    # Mask where skin lesion is, find corners to crop image close to lesion.
+    white_mask = np.where(img_rot == 1)
+    max_x, min_x = max(white_mask[0]), min(white_mask[0])
+    max_y, min_y = max(white_mask[1]), min(white_mask[1])
+    # Crop image
+    img_rot = img_rot[min_x:max_x + 1, min_y:max_y + 1]
+    return img_rot
+
+
+def asymmetry(img):
+    img = rotate(img)
+    img_gauss = img.copy()
+    # Gaussian blur to smooth edges, sigma of 0.004 times smallest dimension
+    # was found through experimental testing
+    sigma = min(img_gauss.shape) * 0.004
+    for i in range(3):
+        img_gauss = gaussian(img_gauss, sigma=(sigma, sigma))
+    scores = []
+    for arr in [img, img_gauss]:
+        arr[arr > 0.1] = 1
+        arr[arr <= 0.1] = 0
+        total_pixels = np.sum(arr)
+        arr_addv = arr + np.flip(arr, 1)
+        arr_addh = arr + np.flip(arr, 0)
+        score_vert = np.sum(arr_addv == 1) / total_pixels
+        score_hor = np.sum(arr_addh == 1) / total_pixels
+        scores.append(score_vert * score_hor)
+    return tuple(scores)

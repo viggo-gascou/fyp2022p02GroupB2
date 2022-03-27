@@ -1,8 +1,7 @@
 import pandas as pd
+import numpy as np
+from measure import measure
 from tqdm import tqdm
-from feature_functions import measure, color_features, color_score
-from math import pi
-from PIL import Image
 
 
 # Paths to the directories with the images and corresponding segmentations to measure
@@ -11,39 +10,30 @@ seg_path = "resized_data/example_segmentation_resized/"
 # Read the example ground thruth csv to get image ids and melanoma data
 df = pd.read_csv("data/example_ground_truth.csv")[["image_id", "melanoma"]]
 
-# Measure area and perimiter using custom function
-area = []
-perimeter = []
-print("Measuring area and perimeter...")
-# tqdm() enables a progress bar for the loop
-for img in tqdm(df["image_id"]):
-    a, p = measure(seg_path + img + "_segmentation.png")
-    area.append(a)
-    perimeter.append(p)
-df["area"], df["perimeter"] = area, perimeter
-# Calculate compactness from formula c = (4*pi*A)/p^2
-df["compactness"] = ((4 * pi) * df["area"]) / df["perimeter"] ** 2
+# Add paths and extensions to image ids
+img_files = [img_path + img + ".jpg" for img in df["image_id"]]
+seg_files = [seg_path + img + "_segmentation.png" for img in df["image_id"]]
 
-# Measure color features
-color_dist = []
-color_sd = []
-color_scores = []
-print("Measuring color features...")
-for img in tqdm(df["image_id"]):
-    # File paths for img and segmentation files
-    img_file = img_path + img + ".jpg"
-    seg_file = seg_path + img + "_segmentation.png"
-    # Open the segmentation file as RGB and as bitmap
-    img = Image.open(seg_file).convert("RGB")
-    mask = Image.open(seg_file)
-    # Paste the image onto the RGB mask using the bitmap mask as a mask
-    # Resulting image is the masked lesion in RGB colours
-    img.paste(Image.open(img_file).convert("RGB"), mask=mask)
-    # Measure color dist and sd with custom functions
-    dist, sd = color_features(img, mask)
-    color_dist.append(dist)
-    color_sd.append(sd)
-    # Measure color score with custom function
-    color_scores.append(color_score(img))
-df["color_dist"], df["color_sd"], df["color_score"] = color_dist, color_sd, color_scores
+print("Measuring features...")
+# Measure features using custom functions for each image and segmentation file
+# tqdm and list for the zip() facilitates a progress bar
+features = np.vstack(
+    [measure(img, seg) for img, seg in tqdm(list(zip(img_files, seg_files)))]
+)
+feature_names = [
+    "asymmetry",
+    "asymmetry_gauss",
+    "area",
+    "perimeter",
+    "compactness",
+    "color_dist",
+    "color_sd",
+    "color_score",
+]
+# Adding the columns of features to the data frame
+for col, feature in zip(features.T, feature_names):
+    df[feature] = col
+# Changing data type for the integer columns
+types = {k: int for k in ["area", "perimeter", "color_score"]}
+df.astype(types)
 df.to_csv("features/features.csv", index=False)
