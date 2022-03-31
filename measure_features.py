@@ -10,12 +10,12 @@ def wrapper(tup):
 
 
 # Paths to the directories with the images and corresponding segmentations to measure
-img_path = "resized_data/test_image_resized/"
-seg_path = "resized_data/test_segmentation_resized/"
+img_path = "resized_data/training_image_resized/"
+seg_path = "resized_data/training_segmentation_resized/"
 
 if __name__ == "__main__":
     # Read the example ground thruth csv to get image ids and melanoma data
-    df = pd.read_csv("data/test_ground_truth.csv")[["image_id", "melanoma"]]
+    df = pd.read_csv("data/training_ground_truth.csv")[["image_id", "melanoma"]]
 
     # Add paths and extensions to image ids
     img_files = [img_path + img + ".jpg" for img in df["image_id"]]
@@ -41,4 +41,4 @@ if __name__ == "__main__":
     # Changing data type for the integer columns
     types = {k: int for k in ["area", "perimeter", "color_score"]}
     df.astype(types)
-    df.to_csv("features/features_test.csv", index=False)
+    df.to_csv("features/features_train_addassymetry.csv", index=False)

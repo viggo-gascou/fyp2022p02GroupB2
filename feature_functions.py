@@ -150,5 +150,5 @@ def asymmetry(img):
         arr_addh = arr + np.flip(arr, 0)
         score_vert = np.sum(arr_addv == 1) / total_pixels
         score_hor = np.sum(arr_addh == 1) / total_pixels
-        scores.append(score_vert * score_hor)
+        scores.append(score_vert + score_hor)
     return tuple(scores)
