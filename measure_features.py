@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 from measure import measure
-from tqdm import tqdm
 from tqdm.contrib.concurrent import process_map
 
 
@@ -31,8 +30,14 @@ if __name__ == "__main__":
         "area",
         "perimeter",
         "compactness",
-        "color_dist",
-        "color_sd",
+        "color_dist_10_5",
+        "color_sd_10_5",
+        "color_dist_10_10",
+        "color_sd_10_10",
+        "color_dist_5_5",
+        "color_sd_5_5",
+        "color_dist_5_10",
+        "color_dist_5_10",
         "color_score",
     ]
     # Adding the columns of features to the data frame
@@ -41,4 +46,4 @@ if __name__ == "__main__":
     # Changing data type for the integer columns
     types = {k: int for k in ["area", "perimeter", "color_score"]}
     df.astype(types)
-    df.to_csv("features/features_train_addassymetry.csv", index=False)
+    df.to_csv("features/features_train.csv", index=False)
