@@ -147,7 +147,7 @@ def rotate(img):
 
 
 def asymmetry(img):
-    if edge_percentage(img) > 0.1:
+    if edge_percentage(img) > 0.25:
         return (4, 4)
     img = rotate(img)
     img_gauss = img.copy()
