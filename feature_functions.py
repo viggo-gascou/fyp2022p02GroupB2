@@ -108,7 +108,7 @@ def edge_percentage(img):
 
     total_size = top_r.size + bottom_r.size + left_c.size + right_c.size
     total_white = int(np.sum(top_r) + np.sum(bottom_r) + np.sum(left_c) + np.sum(right_c))
-    return (total_white / total_size * 100)
+    return (total_white / total_size)
 
 
 def rotate(img):
@@ -147,7 +147,7 @@ def rotate(img):
 
 
 def asymmetry(img):
-    if edge_percentage(img) > 0.25:
+    if edge_percentage(img) > 0.3:
         return (4, 4)
     img = rotate(img)
     img_gauss = img.copy()
