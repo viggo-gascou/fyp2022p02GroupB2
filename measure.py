@@ -18,8 +18,28 @@ def measure(img_file, seg_file):
     seg = plt.imread(seg_file)
     asym, asym_gauss = asymmetry(seg)
     area, perim = area_perimeter(seg)
-    col_dist, col_sd = color_dist_sd(img, mask)
+    col_dist_10_5, col_sd_10_5 = color_dist_sd(img, mask, 10, 5)
+    col_dist_10_10, col_sd_10_10 = color_dist_sd(img, mask, 10, 10)
+    col_dist_5_5, col_sd_5_5 = color_dist_sd(img, mask, 5, 5)
+    col_dist_5_10, col_sd_5_10 = color_dist_sd(img, mask, 5, 10)
     col_score = color_score(img)
     compactness = (4 * pi * area) / perim ** 2
-    features = np.array([asym, asym_gauss, area, perim, compactness, col_dist, col_sd, col_score])
+    features = np.array(
+        [
+            asym,
+            asym_gauss,
+            area,
+            perim,
+            compactness,
+            col_dist_10_5,
+            col_sd_10_5,
+            col_dist_10_10,
+            col_sd_10_10,
+            col_dist_5_5,
+            col_sd_5_5,
+            col_dist_5_10,
+            col_sd_5_10,
+            col_score,
+        ]
+    )
     return features
