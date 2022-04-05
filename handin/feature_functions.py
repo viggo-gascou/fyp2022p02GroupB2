@@ -4,20 +4,21 @@ import math
 from skimage import transform
 from skimage.segmentation import slic
 from skimage.filters import gaussian
+import matplotlib.pyplot as plt
 
 
 def area_perimeter(seg):
     """Measures the area and perimiter of a segmentation mask with the given path"""
     perimeter = 0
     # Pad the image, in case the mask extends to the edge of the image
-    img = np.pad(seg, 3)
+    seg = np.pad(seg, 3)
     # Kernel for finding edges in the mas
     kernel = np.array([[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]])
     # Convolve image and kernel, resulting in an array where the edge pixels all
     # have a negative value. Sum the number of pixels with negative value.
-    perimeter = len(np.where(convolve(img, kernel) < 0)[0])
+    perimeter = np.sum(convolve(seg, kernel) < 0)
     # Area is the sum of the array elements with value 1
-    area = np.sum(img)
+    area = np.sum(seg)
     return (area, perimeter)
 
 
@@ -123,11 +124,11 @@ def rotate(img):
     # Add padding to image before rotating to ensure entire skin lesion stays in frame.
     shape = img.shape
     width_add, height_add = int(shape[0] * 0.25), int(shape[1] * 0.25)
-    image = np.pad(img, (width_add, height_add), constant_values=(0, 0))
+    img = np.pad(img, (width_add, height_add), constant_values=(0, 0))
 
     for i in range(5, 181, 5):
         # Rotate image in intervals of 5 degrees and save max height.
-        height_mask = transform.rotate(image, i)
+        height_mask = transform.rotate(img, i)
         pixels_in_col = np.sum(height_mask, axis=0)
         max_pixels_in_col = np.max(pixels_in_col)
         if max_pixels_in_col > max_height:
@@ -135,7 +136,8 @@ def rotate(img):
             max_deg = i
 
     # Rotate image
-    img_rot = transform.rotate(image, max_deg)
+    img_rot = transform.rotate(img, max_deg)
+    img_rot[img_rot > 0] = 1
 
     # Mask where skin lesion is, find corners to crop image close to lesion.
     white_mask = np.where(img_rot == 1)
@@ -184,9 +186,8 @@ def border_score(seg):
     circle = make_circle(r)
     height_diff = seg.shape[0] - circle.shape[0]
     if height_diff > 0:
-        circle = np.pad(circle, ((height_diff // 2 + (height_diff % 2), height_diff // 2), (0, r % 2)))
+        circle = np.pad(circle, ((height_diff // 2 + height_diff % 2, height_diff // 2),  (0, r % 2)))
     else:
         height_diff = -height_diff
-        seg = np.pad(seg, ((height_diff // 2 + (height_diff % 2), height_diff // 2), (0, 0)))
-        circle = np.pad(circle, ((0, 0), (0, r % 2)))
+        seg = np.pad(seg, height_diff // 2 + height_diff % 2)
     return np.sum(circle + seg == 1) / np.sum(circle)
