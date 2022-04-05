@@ -167,3 +167,25 @@ def asymmetry(img):
         score_hor = np.sum(arr_addh == 1) / total_pixels
         scores.append(score_vert + score_hor)
     return tuple(scores)
+
+
+def make_circle(d):
+    r = d // 2
+    xx, yy = np.mgrid[:2*r, :2*r]
+    circle = (xx - r) ** 2 + (yy - r) ** 2
+    return((circle < r**2).astype(int))
+
+
+def borde_score(seg):
+    seg = rotate(seg)
+    seg[seg > 0.1] = 1
+    seg[seg <= 0.1] = 0
+    r = seg.shape[1]
+    circle = make_circle(r)
+    height_diff = seg.shape[0] - circle.shape[0]
+    if height_diff > 0:
+        circle = np.pad(circle, ((height_diff // 2 + height_diff % 2, height_diff // 2),  (0, seg.shape[0] % 2)))
+    else:
+        height_diff = -height_diff
+        seg = np.pad(seg, height_diff // 2 + height_diff % 2)
+    return np.sum(circle + seg == 1) / np.sum(circle)
