@@ -39,6 +39,7 @@ if __name__ == "__main__":
         "color_dist_5_10",
         "color_sd_5_10",
         "color_score",
+        "border_score"
     ]
     # Adding the columns of features to the data frame
     for col, feature in zip(features.T, feature_names):

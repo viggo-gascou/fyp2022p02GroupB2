@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from feature_functions import asymmetry, area_perimeter, color_dist_sd, color_score
+from feature_functions import asymmetry, area_perimeter, color_dist_sd, color_score, border_score
 from math import pi
 from PIL import Image
 
@@ -24,6 +24,7 @@ def measure(img_file, seg_file):
     col_dist_5_10, col_sd_5_10 = color_dist_sd(img, mask, 5, 10)
     col_score = color_score(img)
     compactness = (4 * pi * area) / perim ** 2
+    border = border_score(seg)
     features = np.array(
         [
             asym,
@@ -40,6 +41,7 @@ def measure(img_file, seg_file):
             col_dist_5_10,
             col_sd_5_10,
             col_score,
+            border
         ]
     )
     return features
