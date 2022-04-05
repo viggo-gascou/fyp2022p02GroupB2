@@ -21,12 +21,12 @@ def area_perimeter(seg):
     return (area, perimeter)
 
 
-def segment_colors(img, mask):
+def segment_colors(img, mask, n_segments, sigma):
     """Given an image file and corresponding segmentation mask, applies the mask
        to the image and segments the lesion into 10 zones by colour. Calculates
        the average color for each zone and returns an array of these values."""
     # Convert image to array and segment into 10 segments using simgma=5
-    segments = slic(img, n_segments=10, sigma=5, mask=mask)
+    segments = slic(img, n_segments=n_segments, sigma=sigma, mask=mask)
     # Find the mean RGB values of each segment and stack into one array
     avg_color = np.vstack([np.mean(img[segments == s], axis=0) for s in np.unique(segments)])
     # If there is an entry with mean color pure black, remove it
@@ -46,8 +46,8 @@ def avg_color_dist(color_arr):
     return sum(distances) / len(distances)
 
 
-def color_dist_sd(img, mask):
-    avg_color = segment_colors(img, mask)
+def color_dist_sd(img, mask, n_segments, sigma):
+    avg_color = segment_colors(img, mask, n_segments, sigma)
     avg_dist = avg_color_dist(avg_color)
     # Computes standard deviation of each channel of R, G and B
     color_sd = np.mean(np.std(avg_color, axis=0))
@@ -98,6 +98,19 @@ def color_score(img):
     return color_count
 
 
+def edge_percentage(img):
+    p = int(img.shape[1] * 1 / 100)
+
+    top_r = img[0:p, :]
+    bottom_r = img[-p:-1, :]
+    left_c = img[p + 1:-p - 1, 0:p]
+    right_c = img[p + 1:-p - 1, -p:-1]
+
+    total_size = top_r.size + bottom_r.size + left_c.size + right_c.size
+    total_white = int(np.sum(top_r) + np.sum(bottom_r) + np.sum(left_c) + np.sum(right_c))
+    return (total_white / total_size)
+
+
 def rotate(img):
     '''
     Takes segmentation mask array as input, determines the best rotation degree
@@ -134,6 +147,8 @@ def rotate(img):
 
 
 def asymmetry(img):
+    if edge_percentage(img) > 0.25:
+        return (4, 4)
     img = rotate(img)
     img_gauss = img.copy()
     # Gaussian blur to smooth edges, sigma of 0.004 times smallest dimension
@@ -150,5 +165,27 @@ def asymmetry(img):
         arr_addh = arr + np.flip(arr, 0)
         score_vert = np.sum(arr_addv == 1) / total_pixels
         score_hor = np.sum(arr_addh == 1) / total_pixels
-        scores.append(score_vert * score_hor)
+        scores.append(score_vert + score_hor)
     return tuple(scores)
+
+
+def make_circle(d):
+    r = d // 2
+    xx, yy = np.mgrid[:2*r, :2*r]
+    circle = (xx - r) ** 2 + (yy - r) ** 2
+    return((circle < r**2).astype(int))
+
+
+def borde_score(seg):
+    seg = rotate(seg)
+    seg[seg > 0.1] = 1
+    seg[seg <= 0.1] = 0
+    r = seg.shape[1]
+    circle = make_circle(r)
+    height_diff = seg.shape[0] - circle.shape[0]
+    if height_diff > 0:
+        circle = np.pad(circle, ((height_diff // 2 + height_diff % 2, height_diff // 2),  (0, seg.shape[0] % 2)))
+    else:
+        height_diff = -height_diff
+        seg = np.pad(seg, height_diff // 2 + height_diff % 2)
+    return np.sum(circle + seg == 1) / np.sum(circle)
