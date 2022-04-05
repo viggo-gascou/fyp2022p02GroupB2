@@ -5,7 +5,7 @@ from PIL import Image
 
 
 def measure(img, seg):
-    # Open the segmentation file as RGB and as bitmap
+    # Convert the image and segmentation to PIL.Image format
     image = Image.fromarray(np.uint8(img)).convert("RGB")
     img = Image.fromarray(np.uint8(seg) * 255).convert("RGB")
     mask = Image.fromarray(np.uint8(seg) * 255)
@@ -15,18 +15,26 @@ def measure(img, seg):
     # Resize image and segmentation
     img.thumbnail((600, 600), resample=False)
     mask.thumbnail((600, 600), resample=False)
+    # Convert image and segmentation back to numpy arrays
     img = np.array(img) / 255
     seg = np.array(mask) / 255
+    # Measure asymmetry scores
     asym, asym_gauss = asymmetry(seg)
+    # Measure area and perimiter
     area, perim = area_perimeter(seg)
+    # Measure average color distance and standard deviation for different number of 
+    # segmenations and sigma scores
     col_dist_10_5, col_sd_10_5 = color_dist_sd(img, mask, 10, 5)
     col_dist_10_10, col_sd_10_10 = color_dist_sd(img, mask, 10, 10)
     col_dist_5_5, col_sd_5_5 = color_dist_sd(img, mask, 5, 5)
     col_dist_5_10, col_sd_5_10 = color_dist_sd(img, mask, 5, 10)
+    # Measure color score for image
     col_score = color_score(img)
-    print(perim)
+    # Calculate compactness
     compactness = (4 * pi * area) / perim ** 2
+    # Measure border score (closeness to a circle)
     border = border_score(seg)
+    # Return an array of all the features
     features = np.array(
         [
             asym,

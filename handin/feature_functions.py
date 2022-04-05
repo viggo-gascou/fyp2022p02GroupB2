@@ -4,7 +4,6 @@ import math
 from skimage import transform
 from skimage.segmentation import slic
 from skimage.filters import gaussian
-import matplotlib.pyplot as plt
 
 
 def area_perimeter(seg):
@@ -48,7 +47,9 @@ def avg_color_dist(color_arr):
 
 
 def color_dist_sd(img, mask, n_segments, sigma):
+    # Get the average colors for each segment with n_segments amount of segments
     avg_color = segment_colors(img, mask, n_segments, sigma)
+    # Compute average euclidian distance between colors
     avg_dist = avg_color_dist(avg_color)
     # Computes standard deviation of each channel of R, G and B
     color_sd = np.mean(np.std(avg_color, axis=0))
@@ -100,13 +101,16 @@ def color_score(img):
 
 
 def edge_percentage(img):
+    # Percentage within perimiter to look at (1%)
     p = int(img.shape[1] * 1 / 100)
 
+    # Calculate amount of pixels within perimiter for each edge
     top_r = img[0:p, :]
     bottom_r = img[-p:-1, :]
     left_c = img[p + 1:-p - 1, 0:p]
     right_c = img[p + 1:-p - 1, -p:-1]
 
+    # Calculate total amount of pixels within perimiter out of total amount possible
     total_size = top_r.size + bottom_r.size + left_c.size + right_c.size
     total_white = int(np.sum(top_r) + np.sum(bottom_r) + np.sum(left_c) + np.sum(right_c))
     return (total_white / total_size)
@@ -137,6 +141,7 @@ def rotate(img):
 
     # Rotate image
     img_rot = transform.rotate(img, max_deg)
+    # Counteract aliasing by chaning all non-black pixels to 1
     img_rot[img_rot > 0] = 1
 
     # Mask where skin lesion is, find corners to crop image close to lesion.
@@ -149,9 +154,13 @@ def rotate(img):
 
 
 def asymmetry(img):
+    # Check if amount of pixels within 1% of perimiter is higher than 25%
+    # If higher than the threshold, returns maximum asymmetry score
     if edge_percentage(img) > 0.25:
         return (4, 4)
+    # Rotate the image to best degree for "folding" the image
     img = rotate(img)
+    # Copy of the image to apply gaussian blur to
     img_gauss = img.copy()
     # Gaussian blur to smooth edges, sigma of 0.004 times smallest dimension
     # was found through experimental testing
@@ -159,35 +168,51 @@ def asymmetry(img):
     for i in range(3):
         img_gauss = gaussian(img_gauss, sigma=(sigma, sigma))
     scores = []
+    # Calculate scores for both normal and blurred image
     for arr in [img, img_gauss]:
+        # Remove aliasing
         arr[arr > 0.1] = 1
         arr[arr <= 0.1] = 0
+        # Count all white pixels
         total_pixels = np.sum(arr)
+        # Flip array horrizontally and vertically and add to array
         arr_addv = arr + np.flip(arr, 1)
         arr_addh = arr + np.flip(arr, 0)
+        # All array elements with value 1 are non-overlapping with the flipped image
+        # Divide the amount of non-overlapping pixels with the total area to fidn a score
         score_vert = np.sum(arr_addv == 1) / total_pixels
         score_hor = np.sum(arr_addh == 1) / total_pixels
+        # Sum the vertical and horizontal asymmetry scores
         scores.append(score_vert + score_hor)
     return tuple(scores)
 
 
 def make_circle(d):
+    # Makes a circle with diameter d
     r = d // 2
-    xx, yy = np.mgrid[:2*r, :2*r]
+    # Get a grid of coordinates from 0,0 to (d, d)
+    xx, yy = np.mgrid[:2 * r, :2 * r]
+    # Mask of the circle from the circle equation
     circle = (xx - r) ** 2 + (yy - r) ** 2
+    # Returns array with 1 at the location of the circle and 0 elsewhere
     return((circle < r**2).astype(int))
 
 
 def border_score(seg):
+    # Rotate the segmentation and crop so it is centered
     seg = rotate(seg)
-    seg[seg > 0.1] = 1
-    seg[seg <= 0.1] = 0
-    r = seg.shape[1]
-    circle = make_circle(r)
+    # Find diameter and make a circle
+    d = seg.shape[1]
+    circle = make_circle(d)
+    # Find the height difference of the arrays to pad them to be the same shape
     height_diff = seg.shape[0] - circle.shape[0]
     if height_diff > 0:
-        circle = np.pad(circle, ((height_diff // 2 + height_diff % 2, height_diff // 2),  (0, r % 2)))
+        # Pad circle to same shape as segmentation if segmentation is bigger
+        circle = np.pad(circle, ((height_diff // 2 + (height_diff % 2), height_diff // 2), (0, d % 2)))
     else:
+        # If circle is bigger, pad segmentation to match the circle
         height_diff = -height_diff
-        seg = np.pad(seg, height_diff // 2 + height_diff % 2)
+        seg = np.pad(seg, ((height_diff // 2 + (height_diff % 2), height_diff // 2), (0, 0)))
+        circle = np.pad(circle, ((0, 0), (0, d % 2)))
+    # Return the amount of pixels in the segmentation that do not match the circle
     return np.sum(circle + seg == 1) / np.sum(circle)
