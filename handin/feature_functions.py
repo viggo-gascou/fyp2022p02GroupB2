@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.ndimage import convolve
+from scipy.ndimage import convolve, label
 import math
 from skimage import transform
 from skimage.segmentation import slic
@@ -216,3 +216,26 @@ def border_score(seg):
         circle = np.pad(circle, ((0, 0), (0, d % 2)))
     # Return the amount of pixels in the segmentation that do not match the circle
     return np.sum(circle + seg == 1) / np.sum(circle)
+
+
+def decode_sp_index(rgb_val):
+    red = rgb_val[0]
+    green = rgb_val[1]
+    blue = rgb_val[2]
+    return red + (green << 8) + (blue << 16)
+
+
+def label_json(spmask, df):
+    indices = np.empty((spmask.shape[:2]))
+    label_arrays = []
+    for x in range(spmask.shape[0]):
+        for y in range(spmask.shape[1]):
+            indices[x, y] = decode_sp_index(spmask[x, y])
+    for col in list(df):
+        arr = np.empty_like(indices, dtype=int)
+        for i, val in enumerate(df[col]):
+            arr[np.where(indices == i)] = int(val)
+        structure = np.ones((3, 3))
+        labels, _ = label(arr, structure=structure)
+        label_arrays.append(labels)
+    return label_arrays
