@@ -228,6 +228,10 @@ def decode_sp_index(rgb_val):
 def hist_json(spmask, df):
     # Bins have been found emperically, so that they are about equipopulated with the data from all 2000 training images
     bins = [[1, 9, 16, 23, 31, 44, 63, 100, 176, 502], [4, 14, 21, 27, 34, 43, 63, 90, 144, 224], [2, 6, 7, 8, 8, 9, 10, 13, 17, 26], [5, 8, 12, 18, 24, 31, 40, 52, 75, 106]]
+    bins = [[1.0, 19.0, 44.0, 129.0, 5834.0],
+            [4.0, 24.0, 43.0, 111.25, 1033.0],
+            [2.0, 7.0, 9.0, 15.0, 670.0],
+            [5.0, 15.0, 31.0, 61.0, 745.0]]
     indices = np.empty((spmask.shape[:2]))
     hist_list = []
     for x in range(spmask.shape[0]):
