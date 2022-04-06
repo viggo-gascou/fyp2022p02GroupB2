@@ -225,17 +225,25 @@ def decode_sp_index(rgb_val):
     return red + (green << 8) + (blue << 16)
 
 
-def label_json(spmask, df):
+def hist_json(spmask, df):
+    # Bins have been found emperically, so that they are about equipopulated with the data from all 2000 training images
+    bins = [[1, 9, 16, 23, 31, 44, 63, 100, 176, 502], [4, 14, 21, 27, 34, 43, 63, 90, 144, 224], [2, 6, 7, 8, 8, 9, 10, 13, 17, 26], [5, 8, 12, 18, 24, 31, 40, 52, 75, 106]]
     indices = np.empty((spmask.shape[:2]))
-    label_arrays = []
+    hist_list = []
     for x in range(spmask.shape[0]):
         for y in range(spmask.shape[1]):
             indices[x, y] = decode_sp_index(spmask[x, y])
-    for col in list(df):
+    for j, col in enumerate(list(df)):
         arr = np.empty_like(indices, dtype=int)
         for i, val in enumerate(df[col]):
             arr[np.where(indices == i)] = int(val)
         structure = np.ones((3, 3))
         labels, _ = label(arr, structure=structure)
-        label_arrays.append(labels)
-    return label_arrays
+        _, counts = np.unique(labels[labels > 0], return_counts=True)
+        hist, _ = np.histogram(counts, bins=bins[j])
+        hist_list.append(hist)
+    return hist_list
+
+
+def percent_json(df):
+    return [np.sum(df[col]) / len(df[col]) for col in list(df)]
