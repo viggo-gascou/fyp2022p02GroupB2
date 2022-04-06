@@ -20,4 +20,3 @@ for img in tqdm(img_names):
 for feat, col in features.items():
     df[feat] = col
 df.to_csv("../features/json_train.csv", index=False)
-

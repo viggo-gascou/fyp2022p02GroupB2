@@ -219,35 +219,56 @@ def border_score(seg):
 
 
 def decode_sp_index(rgb_val):
+    # Decodes rgb values in superpixel mask to indices
+    # Converted from pseudocode at https://challenge.isic-archive.com/landing/2017/43/
     red = rgb_val[0]
     green = rgb_val[1]
     blue = rgb_val[2]
     return red + (green << 8) + (blue << 16)
 
 
+def label_json(spmask, df):
+    """Given the superpixel mask and dataframe of json metadata for an image,
+       returns a 2d array with dimensions equal to spmask, with the present json features
+       at their corresponding indices with all connected componens given a unique label."""
+    indices = np.empty((spmask.shape[:2]))
+    label_arrays = []
+    for x in range(spmask.shape[0]):
+        for y in range(spmask.shape[1]):
+            # Go through each pixel in the superpixel mask and convert to the superpixel index
+            indices[x, y] = decode_sp_index(spmask[x, y])
+    for col in list(df):
+        # For each of the 4 json features, make an array with 1's at the positions
+        # that the feature is present for a given superpixel index
+        arr = np.empty_like(indices, dtype=int)
+        for i, val in enumerate(df[col]):
+            arr[np.where(indices == i)] = int(val)
+        # Label the connected components in the array uniquely
+        structure = np.ones((3, 3))
+        labels, _ = label(arr, structure=structure)
+        label_arrays.append(labels)
+    return label_arrays
+
+
 def hist_json(spmask, df):
     # Bins have been found emperically, so that they are about equipopulated with the data from all 2000 training images
-    bins = [[1, 9, 16, 23, 31, 44, 63, 100, 176, 502], [4, 14, 21, 27, 34, 43, 63, 90, 144, 224], [2, 6, 7, 8, 8, 9, 10, 13, 17, 26], [5, 8, 12, 18, 24, 31, 40, 52, 75, 106]]
+    # bins = [[1, 9, 16, 23, 31, 44, 63, 100, 176, 502], [4, 14, 21, 27, 34, 43, 63, 90, 144, 224], [2, 6, 7, 8, 8, 9, 10, 13, 17, 26], [5, 8, 12, 18, 24, 31, 40, 52, 75, 106]]
     bins = [[1.0, 19.0, 44.0, 129.0, 5834.0],
             [4.0, 24.0, 43.0, 111.25, 1033.0],
             [2.0, 7.0, 9.0, 15.0, 670.0],
             [5.0, 15.0, 31.0, 61.0, 745.0]]
-    indices = np.empty((spmask.shape[:2]))
     hist_list = []
-    for x in range(spmask.shape[0]):
-        for y in range(spmask.shape[1]):
-            indices[x, y] = decode_sp_index(spmask[x, y])
-    for j, col in enumerate(list(df)):
-        arr = np.empty_like(indices, dtype=int)
-        for i, val in enumerate(df[col]):
-            arr[np.where(indices == i)] = int(val)
-        structure = np.ones((3, 3))
-        labels, _ = label(arr, structure=structure)
+    # Get arrays of labeled connected components for each json feature
+    label_arrays = label_json(spmask, df)
+    for i, (col, labels) in enumerate(zip(list(df), label_arrays)):
+        # Compute histograms with the given bins for the size of the connected components in the labeled array
         _, counts = np.unique(labels[labels > 0], return_counts=True)
-        hist, _ = np.histogram(counts, bins=bins[j])
+        hist, _ = np.histogram(counts, bins=bins[i])
         hist_list.append(hist)
     return hist_list
 
 
 def percent_json(df):
+    # Returns the percentage of superpixels where a json feature is present out of
+    # the total number of superpixels in the image, for each json feature
     return [np.sum(df[col]) / len(df[col]) for col in list(df)]
