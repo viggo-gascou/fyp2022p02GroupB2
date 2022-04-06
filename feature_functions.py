@@ -190,3 +190,8 @@ def border_score(seg):
         seg = np.pad(seg, ((height_diff // 2 + (height_diff % 2), height_diff // 2), (0, 0)))
         circle = np.pad(circle, ((0, 0), (0, r % 2)))
     return np.sum(circle + seg == 1) / np.sum(circle)
+
+
+
+
+
