@@ -15,4 +15,4 @@ if __name__ == "__main__":
     labels, probabilities = list(zip(*process_map(wrapper, list(df["image_id"]))))
     df["label"] = labels
     df["probabilities"] = probabilities
-    df.to_csv("features/classification_test.csv", index=False)
+    df.to_csv("classifications/classification_test.csv", index=False)

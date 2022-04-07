@@ -58,6 +58,7 @@ def measure(img, seg):
 
 
 def measure_selected(img, seg):
+    """Measures only the selected features for classification"""
     # Convert the image and segmentation to PIL.Image format
     image = Image.fromarray(np.uint8(img)).convert("RGB")
     img = Image.fromarray(np.uint8(seg) * 255).convert("RGB")
@@ -94,8 +95,12 @@ def measure_selected(img, seg):
 
 
 def measure_json(spmask, df):
+    # Resize superpixel mask so measurement finished in manageable time
+    # A size of 100x100 doesn't seem to impact accuracy any reasonable amount
     spmask.thumbnail((100, 100), resample=False)
     spmask = np.array(spmask)
+    # Get the histograms of the JSON feature component sizes
     hists = hist_json(spmask, df)
+    # Get percentages of JSON features
     percentages = percent_json(df)
     return percentages + hists
