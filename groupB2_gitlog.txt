@@ -1,0 +1,711 @@
+commit 49daa4eecdde3a39f109d7a00addb6fbce91bb4a
+Author: viggo-gascou <viggo.gascou@gmail.com>
+Date:   Thu Apr 7 21:53:38 2022 +0000
+
+    various updates
+
+commit 539d312de2d8d1d1393e3a4b5bd7366f681c4cab
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Thu Apr 7 20:52:14 2022 +0200
+
+    renamed and merged function, measure and classification scripts. Commented some stuff
+
+commit 83e35fff5bc58172a22de5c62e67d00f63256eff
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Thu Apr 7 18:04:01 2022 +0000
+
+    moved scripts til util subfolder
+
+commit efeb505a4a60522301274076e1c4e468d2040bae
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Thu Apr 7 17:44:43 2022 +0000
+
+    Everything works now
+
+commit 2937fb69e4624cc73ea304956b4941e0753726e1
+Author: viggo-gascou <viggo.gascou@gmail.com>
+Date:   Thu Apr 7 13:24:13 2022 +0000
+
+    More plots and figures
+
+commit a591ac7e77dba813a278f390a952c0bf9cb594e6
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Thu Apr 7 14:44:04 2022 +0200
+
+    Mean classification with correct labels
+
+commit 635e42fc04041b8b6e401b734bbdd4163a004f50
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Thu Apr 7 14:42:51 2022 +0200
+
+    Classified test images
+
+commit 551dbf4c106131cb5abfbb9299abd3d01ebebb7c
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Thu Apr 7 14:32:43 2022 +0200
+
+    Scripts ready to classify test
+
+commit 93682d9602e19cd5b45cfad5a7b768696cf8ee93
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Thu Apr 7 14:16:47 2022 +0200
+
+    Fixed scaler problems
+
+commit bd6da36f65526deb759978fd853275baa698a74e
+Author: viggo-gascou <viggo.gascou@gmail.com>
+Date:   Thu Apr 7 11:29:30 2022 +0000
+
+    many changes
+
+commit 662560459dae366bb9475fd01882939a11342e05
+Author: viggo-gascou <viggo.gascou@gmail.com>
+Date:   Thu Apr 7 10:48:00 2022 +0000
+
+    many updates
+
+commit 633059055e83b2d38780fa04e4e229cf8e684627
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Thu Apr 7 01:35:43 2022 +0200
+
+    Script for finding histogram bins
+
+commit f5b9eb316999df6e421ead7a7573329177349a8f
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Thu Apr 7 01:13:18 2022 +0200
+
+    New json measurement funcitons, updated normal measurement funcs
+
+commit 9ed40fb95ed7dab0bc0a449b9f93c9deb53c63f5
+Author: viggo-gascou <viggo.gascou@gmail.com>
+Date:   Wed Apr 6 22:26:48 2022 +0000
+
+    Changed json to 5 bins
+
+commit 3971a6c99ad19889c44f9805f2349996b4d209f7
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Wed Apr 6 22:22:32 2022 +0200
+
+    measured json data for training images
+
+commit 4aff9331f00fcc15606f3ac42aa2f3ced375da08
+Author: viggo-gascou <viggo.gascou@gmail.com>
+Date:   Wed Apr 6 20:09:41 2022 +0000
+
+    more json feature work
+
+commit 2cccf3c9c4d7e2440cb53f952f098d31c71432c9
+Merge: 3b04f313 743e9747
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Wed Apr 6 20:05:22 2022 +0200
+
+    Merge branch 'main' of https://github.com/viggo-gascou/fyp2022p02GroupB2 into main
+
+commit 3b04f313f7c4c8273d394bda0aaaf5c8f8283737
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Wed Apr 6 20:05:02 2022 +0200
+
+    Added json feature
+
+commit 743e9747659c17d9724d480c7332dd735a058cbb
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Wed Apr 6 17:51:42 2022 +0000
+
+    combined classifications
+
+commit 804297452e6e113cde3def6cce78138e6f0f7966
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Tue Apr 5 12:32:14 2022 +0200
+
+    Handin work
+
+commit c7d341a90b6835e86e83afe06afb311772a7e072
+Merge: 48c44598 43c32d00
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Tue Apr 5 12:07:30 2022 +0200
+
+    Merge branch 'main' of https://github.com/viggo-gascou/fyp2022p02GroupB2
+
+commit 48c44598a60c3d122d59327e9dc2d7fedfa120d3
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Tue Apr 5 12:07:25 2022 +0200
+
+    Border feature and handin
+
+commit 43c32d00ad9aab27329957d35d477f58fe527e76
+Merge: fe07d32e b84b0d50
+Author: Magnus Simoni Jahn <magnusjahn98@gmail.com>
+Date:   Tue Apr 5 11:32:29 2022 +0200
+
+    Merge branch 'main' of https://github.com/viggo-gascou/fyp2022p02GroupB2
+
+commit fe07d32e76762e92fd7b51ade57b6d5eb3feb1c5
+Author: Magnus Simoni Jahn <magnusjahn98@gmail.com>
+Date:   Tue Apr 5 11:32:08 2022 +0200
+
+    Manual classification done.
+
+commit b84b0d5028ac0fdc5e54740f8ef87a061398f473
+Merge: e8c00a1d 2d55c26f
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Tue Apr 5 11:02:53 2022 +0200
+
+    Merge branch 'main' of https://github.com/viggo-gascou/fyp2022p02GroupB2
+
+commit 2d55c26fb3790c9a9a17486d4869130f61058339
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Tue Apr 5 09:02:43 2022 +0000
+
+    Added border
+
+commit e8c00a1dbd6791a331c07c2da91c4151879feac1
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Sun Apr 3 23:14:55 2022 +0200
+
+    Gustav classification
+
+commit f85a30e602b26fbb65a9dd36d0aaa4c04d639fa7
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Fri Apr 1 18:15:16 2022 +0200
+
+    25% threshold
+
+commit 013d57e93c75f9cee6601aeeed837f0c4efa7952
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Fri Apr 1 18:07:53 2022 +0200
+
+    10% threshold instead
+
+commit 255c49159b52007ddae6f3dba38f83009a973396
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Fri Apr 1 15:43:11 2022 +0000
+
+    Fixed json features csv
+
+commit 8264ab8cbe913c7ec587e27a9be5204c35566646
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Fri Apr 1 15:45:44 2022 +0200
+
+    Fixed threshold for edge detection
+
+commit dcfe4865615b4801e1dc1def4fc12aeb16f414e0
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Fri Apr 1 14:37:04 2022 +0200
+
+    Fixed issue with feature names
+
+commit 2757b9780b654ee79c9a452b295e08d7c387c18b
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Fri Apr 1 12:18:17 2022 +0000
+
+    to run on macbook
+
+commit 8c2e84ca174353bc5b36d9b9a702638af13c2f98
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Fri Apr 1 13:58:10 2022 +0200
+
+    Edge detection for assymmetry and more slic params
+
+commit 831d1a6f4d7c35abd4d167958063b7156cf9d412
+Merge: 515043a8 018821db
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Fri Apr 1 11:45:54 2022 +0000
+
+    Merge branch 'main' of https://github.com/viggo-gascou/fyp2022p02GroupB2 into main
+
+commit 515043a8284e0457b7fd6ce92601516b232f9db7
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Fri Apr 1 11:45:50 2022 +0000
+
+    Feature selection and edge detection
+
+commit 018821db5dba2dff0323fecdc88946115726e027
+Author: gustavkrist <gukr@itu.dk>
+Date:   Fri Apr 1 13:42:31 2022 +0200
+
+    Added edge_percentage and multiple slick parameters
+
+commit aa39b2a144c7776fd48012aea9a3e77e45a45412
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Thu Mar 31 10:46:51 2022 +0200
+
+    features with asymmetry added instead of multiplied
+
+commit c19b9f3a20ab03eed21432e0ccb26737fd906fe2
+Merge: bea9eb48 402f27fb
+Author: viggo-gascou <viggo.gascou@gmail.com>
+Date:   Thu Mar 31 08:40:58 2022 +0000
+
+    Merge branch 'main' of https://github.com/viggo-gascou/fyp2022p02GroupB2 into main
+
+commit bea9eb48f84e4b5ee271b9712834f96962c7abc5
+Author: viggo-gascou <viggo.gascou@gmail.com>
+Date:   Thu Mar 31 08:40:49 2022 +0000
+
+    Looked at json features
+
+commit 402f27fb66a66275b9a32a2fd480f83f7ab76c13
+Author: Viggo Gascou <94069687+viggo-gascou@users.noreply.github.com>
+Date:   Tue Mar 29 22:26:15 2022 +0200
+
+    "viggo_classifiy -> now with ratings! 🥳
+
+commit 2745b09481be6590947a64ea16c086d57ce23949
+Author: fril <fril@itu.dk>
+Date:   Tue Mar 29 13:15:12 2022 +0200
+
+    My classifications
+
+commit 8e47f91e78e6566e14b5e6c1118f2183df69e197
+Merge: f56eea80 1f0f6d11
+Author: Marie Haahr Petersen <mhpe@itu.dk>
+Date:   Tue Mar 29 13:10:04 2022 +0200
+
+    Merge branch 'main' of https://github.com/viggo-gascou/fyp2022p02GroupB2
+
+commit f56eea80c39dcd82acf3f3dc8d00511712ade1dd
+Author: Marie Haahr Petersen <mhpe@itu.dk>
+Date:   Tue Mar 29 13:08:46 2022 +0200
+
+    finally
+
+commit 1f0f6d11fb1ce45b3b71926e1ecee152fea25c51
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Tue Mar 29 13:03:29 2022 +0200
+
+    Added superpixels training images
+
+commit 41903d5a20bf8f83f0ff3d6b6d7be39bbe187dce
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Tue Mar 29 11:01:07 2022 +0000
+
+    pre upload
+
+commit 5499ce70444b0bb6a5ba4cc0c7bbdeebef60e771
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Mon Mar 28 23:28:24 2022 +0200
+
+    Added, resized and measured test data from ISIC
+
+commit 769a530e72600ec4c1b365cf1ce705c1a5d2715b
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Mon Mar 28 11:28:04 2022 +0200
+
+    Multiprocessing resize, resized jpg training instead of png
+
+commit aef026e6deb6d493a59572ec7d3d8130f9349acf
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Mon Mar 28 08:24:00 2022 +0000
+
+    Feature score plot
+
+commit a0c32595f59e2d809a968c9755dfd04f8a36fc54
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Sun Mar 27 18:53:01 2022 +0200
+
+    New function to measure features given img and seg
+
+commit caa0ad218946d46421f8d9cf5f61c5af785a62f7
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Sun Mar 27 14:13:38 2022 +0200
+
+    Commented code and added measure functions into one script
+
+commit 3809617d95c97116a813f978c06f16b0beaf88d5
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Sun Mar 27 12:48:39 2022 +0200
+
+    Reduced to the same 60 pictures
+
+commit e2a8b8bd4af9b389e4076b3ac89082e620736023
+Merge: 79469b4f acdf3aac
+Author: gustavkrist <gukr@itu.dk>
+Date:   Sat Mar 26 12:13:09 2022 +0100
+
+    Merge branch 'main' of https://github.com/viggo-gascou/fyp2022p02GroupB2 into main
+
+commit 79469b4f195eaf4d10c8ae578e51aa4dde5cb8dd
+Author: gustavkrist <gukr@itu.dk>
+Date:   Sat Mar 26 12:12:56 2022 +0100
+
+    Added overleaf to gitignore
+
+commit acdf3aac89a474aadfbe728136b2ea716c8517b7
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Sat Mar 26 10:53:50 2022 +0000
+
+    Improved perimeter function, plots
+
+commit 1972978934e0c8ea6ad261a5dd6438442ff9f0f1
+Author: gustavkrist <gukr@itu.dk>
+Date:   Sat Mar 26 10:43:38 2022 +0100
+
+    renamed functions folder, sped up areaperim
+
+commit afce1c63f804ecd52f700d147af48c764d3b4486
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Sat Mar 26 00:25:31 2022 +0100
+
+    Rotated and smoothed all images
+
+commit 1f39644fc5629287634acc277cd8fa84a78c5317
+Merge: 89512316 05426b93
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Fri Mar 25 22:57:34 2022 +0000
+
+    merge
+
+commit 89512316ad5fc75f84ce9492e42961b71e50c010
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Fri Mar 25 22:55:31 2022 +0000
+
+    added padding before perimiter measure
+
+commit 05426b935d2e15fc4377b49ba6df577ec25bd829
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Fri Mar 25 23:54:11 2022 +0100
+
+    Multiprocessing rotate script to speed up processing
+
+commit 503ab4d4a95465b7bcae52af505e6d7ca1e530d7
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Fri Mar 25 22:02:41 2022 +0100
+
+    Using multiprocessing to rotate faster
+
+commit 42773c2f9343c5775b63d9668a2873b830d500c3
+Author: gustavkrist <gukr@itu.dk>
+Date:   Fri Mar 25 14:33:00 2022 +0100
+
+    Added fullsize segmentations
+
+commit 7dd8045cf683889075701f5c201174bec0caad99
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Fri Mar 25 13:30:19 2022 +0000
+
+    sync with local
+
+commit 12e8ed5180bc9d3690a3da655992e408471a6f49
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Fri Mar 25 12:23:51 2022 +0000
+
+    deepnote sync
+
+commit 978a9dbcc5dc1fb5f5b7fe0df2e49cc1642dd0b6
+Merge: 26ac6d4b 3bd95e79
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Fri Mar 25 09:09:41 2022 +0000
+
+    merge
+
+commit 26ac6d4bc2df0d9d26f5d1e0c9ee7bb3b6bd8ec1
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Fri Mar 25 09:08:49 2022 +0000
+
+    .
+
+commit 3bd95e79fd09803f094e6ccc5e86858f773b1cdc
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Fri Mar 25 10:04:19 2022 +0100
+
+    Small changes and script for springer color measurement
+
+commit 36b715cb7fc974cb974b8c9c0e7b1b4ae047b730
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Fri Mar 25 00:02:30 2022 +0000
+
+    Script for rotating and cropping segmentations
+
+commit 83ff385a5d10b810b3435fc9cbe7e279ce8eb454
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Fri Mar 25 00:02:12 2022 +0000
+
+    Renamed file
+
+commit f968d4b728836ddead122ae0d6e8cc3011008ac3
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Fri Mar 25 00:01:51 2022 +0000
+
+    Function script files
+
+commit 14169f145c858c74aa81a4984376cb005c98c27f
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Thu Mar 24 10:30:23 2022 +0100
+
+    Changed inner loop, ~33% faster
+
+commit 73fc42b5974e1ec581ac5b93ce6e485fc16ecb6d
+Merge: e50d00de ad6c99fe
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Thu Mar 24 09:13:58 2022 +0000
+
+    Merge branch 'main' of https://github.com/viggo-gascou/fyp2022p02GroupB2 into main
+
+commit e50d00dec2ab0f266a3a1790f1d43f5833246572
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Thu Mar 24 09:13:51 2022 +0000
+
+    functions for sd of color distance
+
+commit ad6c99fe1e7ce0258599b6d5635275afc279cd50
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Tue Mar 22 13:48:31 2022 +0100
+
+    Now takes 0-10 for ABC
+
+commit 563adbb3fbc3fe0771bea014962ad30f0bd4d012
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Tue Mar 22 12:53:25 2022 +0100
+
+    Resized without resampling
+
+commit 550763ad09c9ce79a3253f50be061bb10078a635
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Tue Mar 22 12:24:22 2022 +0100
+
+    Combined csv
+
+commit 46e87caaaea486504a9d9ff20fb20b924f2aef9c
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Tue Mar 22 12:15:30 2022 +0100
+
+    Measure area, perimiter and compactness
+
+commit 5128771f28b219fd3207cdb1da114899dcfbce8a
+Merge: d016cc15 f1620206
+Author: fril <fril@itu.dk>
+Date:   Tue Mar 22 10:08:47 2022 +0100
+
+    Merge branch 'main' of https://github.com/viggo-gascou/fyp2022p02GroupB2
+
+commit d016cc15dd128a806c93f12e5b205c0f32d0ac99
+Author: fril <fril@itu.dk>
+Date:   Tue Mar 22 10:08:28 2022 +0100
+
+    Frida classification
+
+commit f1620206f35f07e48ab6def08b6cfa286f884845
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Mon Mar 21 23:51:08 2022 +0100
+
+    Script for adding together the csv files
+
+commit 57addf1d0e3499bd22a58a1b57887a3f74eff990
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Mon Mar 21 22:47:00 2022 +0100
+
+    Added Gustav's classifications
+
+commit 2544d46356ecd780f08a94618c10eab58dc66e5f
+Author: Viggo Gascou <94069687+viggo-gascou@users.noreply.github.com>
+Date:   Mon Mar 21 19:17:03 2022 +0100
+
+    add project description
+
+commit b677989e8116dd71a79fb6831af3fde89eb2aa60
+Author: Viggo Gascou <94069687+viggo-gascou@users.noreply.github.com>
+Date:   Fri Mar 18 22:27:28 2022 +0100
+
+    update save_exit() -> remove pandas index from csv
+    
+    - Added "index = False" parameter to remove pandas created index column
+      from the saved csv files
+
+commit e3bee10811cbdc4e9cafd49830d425ba85c41f1a
+Author: Viggo Gascou <94069687+viggo-gascou@users.noreply.github.com>
+Date:   Fri Mar 18 22:19:22 2022 +0100
+
+    csv modifications
+    
+    - Added viggo_classification
+    - Modified existing classifications by removing index column that was
+      created by pands to_csv function
+
+commit 3598e681b7487a4063b9536936f0d27b54ee2328
+Author: Marie Haahr Petersen <mhpe@itu.dk>
+Date:   Fri Mar 18 15:04:08 2022 +0100
+
+    marie_classification.csv :)
+
+commit 08b674b63ec37f769d2e1b8218b67cab9719bc59
+Author: Magnus Simoni Jahn <magnusjahn98@gmail.com>
+Date:   Fri Mar 18 14:39:31 2022 +0100
+
+    removed test.txt
+
+commit 9249c77d72d34723ec9b9ccc908d2f744eb6c310
+Author: Magnus Simoni Jahn <magnusjahn98@gmail.com>
+Date:   Fri Mar 18 14:37:07 2022 +0100
+
+    this is a test
+
+commit faf9523b72957f96acce3a7e02dd79437e87c134
+Author: Viggo Gascou <94069687+viggo-gascou@users.noreply.github.com>
+Date:   Fri Mar 18 14:20:32 2022 +0100
+
+    remove test.txt
+
+commit 2ed83217ffba72be58aadb9c390721d48f2545bf
+Author: Viggo Gascou <94069687+viggo-gascou@users.noreply.github.com>
+Date:   Fri Mar 18 14:20:05 2022 +0100
+
+    test
+
+commit 0cfd1340038562ce2627c8c100e4fe2ebc73588c
+Author: Magnus Simoni Jahn <magja@itu.dk>
+Date:   Fri Mar 18 13:26:41 2022 +0100
+
+    Added magnus classification
+
+commit aa942f10ba4cb2e18a9f7878b3429fdb98eeab92
+Author: Viggo Gascou <94069687+viggo-gascou@users.noreply.github.com>
+Date:   Fri Mar 18 12:59:59 2022 +0100
+
+    Updated path to images
+
+commit 783128ee4d7064e70f9cc890fe9689471ad44a95
+Author: Viggo Gascou <94069687+viggo-gascou@users.noreply.github.com>
+Date:   Fri Mar 18 12:55:18 2022 +0100
+
+    Made sure that bucket files go in buckets folder
+
+commit d626c801c68f8e9d72e99400ec8726df1cf6a708
+Author: Viggo Gascou <94069687+viggo-gascou@users.noreply.github.com>
+Date:   Fri Mar 18 12:54:40 2022 +0100
+
+    Sorted version of buckets
+
+commit 6f07bd1a858cb4c6eb9f74e113c144e415f85423
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Fri Mar 18 12:33:18 2022 +0100
+
+    Sorts img dirs now to be deterministic
+
+commit 57cdb9ce0e36fc3dc0f40cccfe76da908476c18d
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Fri Mar 18 12:31:49 2022 +0100
+
+    Fixed folder path
+
+commit f2e3f349c38484aea39c049fad3e8f6b61c859fe
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Fri Mar 18 10:54:14 2022 +0100
+
+    More data added and resized
+
+commit ed22f5a67af342f8b66da0e7afce9a56b305043b
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Fri Mar 18 09:52:57 2022 +0100
+
+    Added arguments to button callbacks
+
+commit 843db78d136ff01659b1f6283f31cba0f6076123
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Fri Mar 18 00:09:38 2022 +0100
+
+    Implemented starting from any index
+
+commit ce5a6d9ab8f3cd17b46d3fc08d45a2c930aa60b2
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Thu Mar 17 23:22:34 2022 +0100
+
+    Fixed exiting when all pictures are classified
+
+commit 9afb402fbcb8cb659f799330b30ad11245cd7f6e
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Thu Mar 17 23:08:56 2022 +0100
+
+    Added scripts for exercise 1, manual classification
+
+commit 3ab44363452dc6b7afe8af12f052408240334601
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Thu Mar 17 20:32:24 2022 +0000
+
+    Resized images
+
+commit 418f765698fccbeabfcf6b4b1556c03e8c812738
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Thu Mar 17 13:46:42 2022 +0100
+
+    Script to resize files
+
+commit cfb120ccf5ef6aa3122e5f1f9639e4173ee6637b
+Merge: 37674930 d199d7e5
+Author: Magnus Simoni Jahn <magja@itu.dk>
+Date:   Thu Mar 17 13:16:59 2022 +0100
+
+    Merge branch 'main' of https://github.com/viggo-gascou/fyp2022p02GroupB2
+
+commit d199d7e547e7d319be2bac57761b8db4a7e3ffaf
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Thu Mar 17 12:16:40 2022 +0000
+
+    Untracked fyp2022-imaging
+
+commit 3767493059471abcd65644d02dcc52090f9f297c
+Merge: 6239d0df 4b8f341d
+Author: Magnus Simoni Jahn <magja@itu.dk>
+Date:   Thu Mar 17 13:16:27 2022 +0100
+
+    Merge branch 'main' of https://github.com/viggo-gascou/fyp2022p02GroupB2
+
+commit 6239d0df045543ac552711fc3c73b9acc4e34aa4
+Author: Magnus Simoni Jahn <magja@itu.dk>
+Date:   Thu Mar 17 13:15:44 2022 +0100
+
+    deleted test
+
+commit 4b8f341da63440575fd0af12fae89cea510d6080
+Author: Gustav Kristensen <gustavkrist@gmail.com>
+Date:   Thu Mar 17 13:14:46 2022 +0100
+
+    Dont track fyp2022-imaging folder
+
+commit de6bff95bcc8b4eeb3a3e817e25b0e46a7569d66
+Author: Magnus Simoni Jahn <magja@itu.dk>
+Date:   Thu Mar 17 13:13:44 2022 +0100
+
+    test
+
+commit 3f14aace0b15a863f6eea254ed5a66a4543852d4
+Merge: 0b4e5c16 e134f593
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Thu Mar 17 12:06:14 2022 +0000
+
+    Merge branch 'main' of https://github.com/viggo-gascou/fyp2022p02GroupB2 into main
+
+commit 0b4e5c1695769c1f8dd6f9d3dd6f07d5565ef8be
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Thu Mar 17 12:06:05 2022 +0000
+
+    Added to deepnote
+
+commit e134f593a40e0a4f65c0d053e83750931df02684
+Author: Viggo Gascou <94069687+viggo-gascou@users.noreply.github.com>
+Date:   Thu Mar 17 13:05:39 2022 +0100
+
+    add .DS_Store
+
+commit 201ea12fb5d5ebd27354bbd623ddc96c0049b0aa
+Author: gustavkrist <gustavkrist@gmail.com>
+Date:   Thu Mar 17 12:01:32 2022 +0000
+
+    fix?
+
+commit 2223eeba4c3714658b961dcd0c4ae4b8122f2be9
+Author: viggo-gascou <viggo.gascou@gmail.com>
+Date:   Thu Mar 17 11:59:16 2022 +0000
+
+    initial commit
+
+commit 08694147b8e8adb4383ec14d3ab6657834e0224a
+Author: viggo-gascou <94069687+viggo-gascou@users.noreply.github.com>
+Date:   Thu Mar 17 10:56:44 2022 +0100
+
+    Update README.md
+
+commit 31da1e75a5dfe1c08cc6afd235cbe321f4a4d0db
+Author: viggo-gascou <94069687+viggo-gascou@users.noreply.github.com>
+Date:   Thu Mar 17 10:55:11 2022 +0100
+
+    Initial commit
