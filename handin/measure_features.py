@@ -7,14 +7,14 @@ from tqdm.contrib.concurrent import process_map
 
 def wrapper(img_name):
     # Wrapper function for processes, loads image and segmentation and returns measured features
-    img = plt.imread(f"../data_to_resize/training_image/{img_name}.jpg")
-    seg = plt.imread(f"../data_to_resize/training_segmentation/{img_name}_segmentation.png")
+    img = plt.imread(f"../data/example_image/{img_name}.jpg")
+    seg = plt.imread(f"../data/example_segmentation/{img_name}_segmentation.png")
     return measure(img, seg)
 
 
 if __name__ == "__main__":
     # Read the example ground thruth csv to get image ids and melanoma data
-    df = pd.read_csv("../data/training_ground_truth.csv")[["image_id", "melanoma"]]
+    df = pd.read_csv("../data/example_ground_truth.csv")[["image_id", "melanoma"]]
 
     print("Measuring features...")
     # Measure features using custom functions for each image and segmentation file
@@ -43,4 +43,4 @@ if __name__ == "__main__":
     # Changing data type for the integer columns
     types = {k: int for k in ["area", "perimeter", "color_score"]}
     df.astype(types)
-    df.to_csv("../features/features_training.csv", index=False)
+    df.to_csv("../features/features_example.csv", index=False)
