@@ -1,11 +1,10 @@
 import pandas as pd
 import numpy as np
 import pickle
-from sklearn.feature_selection import mutual_info_classif, SelectKBest, SequentialFeatureSelector
-from sklearn.model_selection import StratifiedShuffleSplit
+from sklearn.feature_selection import mutual_info_classif, SelectKBest
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import MinMaxScaler
-from measure import measure_selected
+from measure import measure_selected, measure_json
 
 
 def train_classifier():
@@ -15,20 +14,25 @@ def train_classifier():
     x = df[features].to_numpy()
     y = np.array(df["melanoma"])
 
-    x = MinMaxScaler().fit_transform(x)
+    scaler = MinMaxScaler().fit(x)
+    x = scaler.transform(x)
     clf = KNeighborsClassifier(n_neighbors=9).fit(x, y)
     with open("classifier.sav", "wb") as file:
         pickle.dump(clf, file)
+    with open("scaler.sav", "wb") as file:
+        pickle.dump(scaler, file)
 
 
 def classify(img, seg):
     with open("classifier.sav", "rb") as file:
         clf = pickle.load(file)
+    with open("scaler.sav", "rb") as file:
+        scaler = pickle.load(file)
     x = measure_selected(img, seg).reshape(1, 5)
-    x = MinMaxScaler().fit_transform(x)
-    pred_prob = clf.predict_proba(x)
+    x = scaler.transform(x)
+    pred_prob = clf.predict_proba(x)[0]
     threshold = 0.2
-    pred_label = int(pred_prob[0][1] > threshold)
+    pred_label = int(pred_prob[1] > threshold)
     return pred_label, pred_prob
 
 
@@ -49,30 +53,36 @@ def train_json_classifier():
     xj = np.hstack([np.vstack(jdf[feat].to_numpy()) for feat in features])
     selector = SelectKBest(mutual_info_classif, k=5)
     selector.fit(xj, y)
-    scores = selector.scores_
     selected_indices = np.argsort(selector.scores_)[-5:]
-    with open("selected_json_features.txt") as f:
-        f.write(str(selected_indices))
+    with open("selected_json_features.txt", "w") as f:
+        f.write(" ".join(selected_indices.astype(str).tolist()))
     xj = xj[:, selected_indices]
     x = np.c_[x, xj]
 
-    x = MinMaxScaler().fit_transform(x)
+    scaler = MinMaxScaler().fit(x)
+    x = scaler.transform(x)
 
     clf = KNeighborsClassifier(n_neighbors=9).fit(x, y)
     with open("classifier_json.sav", "wb") as file:
         pickle.dump(clf, file)
-
+    with open("scaler_json.sav", "wb") as file:
+        pickle.dump(scaler, file)
 
 
 def classify_json(img, seg, spmask, json_df):
-    # with open("classifier_json.sav", "rb") as file:
-    #     clf = pickle.load(file)
+    with open("classifier_json.sav", "rb") as file:
+        clf = pickle.load(file)
+    with open("scaler_json.sav", "rb") as file:
+        scaler = pickle.load(file)
     x = measure_selected(img, seg).reshape(1, 5)
     xj = measure_json(spmask, json_df)
-    print(xj)
-    
-    # x = MinMaxScaler().fit_transform(x)
-    # pred_prob = clf.predict_proba(x)
-    # threshold = 0.2
-    # pred_label = int(pred_prob[0][1] > threshold)
-    # return pred_label, pred_prob
+    with open("selected_json_features.txt") as f:
+        selected_indices = list(map(int, f.read().split()))
+    xj = np.hstack(xj)[selected_indices].reshape(1, 5)
+    x = np.c_[x, xj]
+
+    x = scaler.transform(x)
+    pred_prob = clf.predict_proba(x)[0]
+    threshold = 0.2
+    pred_label = int(pred_prob[1] > threshold)
+    return pred_label, pred_prob
