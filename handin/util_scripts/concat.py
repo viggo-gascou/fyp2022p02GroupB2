@@ -29,7 +29,7 @@ mean_df = pd.DataFrame(mean_cols)
 
 img_names = list(full_df["image_id"])
 converter = {"probabilities": lambda x: np.array(x[1:-1].split(), dtype=float)}
-class_df = pd.read_csv("features/classification_example.csv", converters=converter)
+class_df = pd.read_csv("classifications/classification_example.csv", converters=converter)
 class_df = class_df.loc[[img in img_names for img in class_df["image_id"]]]
 feature_df = pd.read_csv("features/features_example.csv")
 feature_df = feature_df.loc[[img in img_names for img in feature_df["image_id"]]]
