@@ -28,7 +28,8 @@ for col in columns:
 mean_df = pd.DataFrame(mean_cols)
 
 img_names = list(full_df["image_id"])
-class_df = pd.read_csv("features/labels_example.csv")
+converter = {"probabilities": lambda x: np.array(x[1:-1].split(), dtype=float)}
+class_df = pd.read_csv("features/classification_example.csv", converters=converter)
 class_df = class_df.loc[[img in img_names for img in class_df["image_id"]]]
 feature_df = pd.read_csv("features/features_example.csv")
 feature_df = feature_df.loc[[img in img_names for img in feature_df["image_id"]]]
@@ -79,14 +80,19 @@ mean_df["asymmetry_class"] = A
 mean_df["border_class"] = B
 mean_df["color_class"] = C
 mean_df["melanoma_class"] = class_df["label"]
+mean_df["melanoma_prob_class"] = np.vstack(class_df["probabilities"])[:,1]
 mean_df["melanoma_true"] = feature_df["melanoma"]
 mean_df["image_id"] = img_names
+mean_df["melanoma_prob"] = list(mean_df["melanoma"])
+mean_df["melanoma"] = np.round(mean_df["melanoma"])
 mean_df = mean_df[
     [
         "image_id",
         "melanoma_true",
         "melanoma",
         "melanoma_class",
+        "melanoma_prob",
+        "melanoma_prob_class",
         "asymmetry",
         "asymmetry_class",
         "border",
