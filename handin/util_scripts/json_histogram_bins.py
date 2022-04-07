@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from PIL import Image
-from feature_functions import label_json
+from groupB2_functions import label_json
 from tqdm.contrib.concurrent import process_map
 
 

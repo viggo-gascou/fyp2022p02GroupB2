@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from PIL import Image
-from measure import measure_json
+from groupB2_functions import measure_json
 from tqdm.contrib.concurrent import process_map
 
 

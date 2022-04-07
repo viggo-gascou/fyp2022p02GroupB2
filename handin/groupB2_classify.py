@@ -4,7 +4,7 @@ import pickle
 from sklearn.feature_selection import mutual_info_classif, SelectKBest
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import MinMaxScaler
-from measure import measure_selected, measure_json
+from groupB2_functions import measure_selected, measure_json
 
 
 def train_classifier():
@@ -29,6 +29,10 @@ def train_classifier():
 
 
 def classify(img, seg):
+    """Classifies image given an image array and segmentation array
+       Image array must be a m x n x 3 integer array of RGB values between 0 and 255
+       Segmentation array must be a 2D binary array with values 0 or 1
+       Returns 2-length tuple with the predicted label and a 1 x 2 array with the probabilities"""
     # Loads the classifier and scaler
     with open("classifier.sav", "rb") as file:
         clf = pickle.load(file)
@@ -90,6 +94,10 @@ def train_json_classifier():
 
 
 def classify_json(img, seg, spmask, json_df):
+    """Classifies image given an image array and segmentation array
+       Image array must be a m x n x 3 integer array of RGB values between 0 and 255
+       Segmentation array must be a 2D binary array with values 0 or 1
+       Returns 2-length tuple with the predicted label and a 1 x 2 array with the probabilities"""
     # Loads the classifier and scaler
     with open("classifier_json.sav", "rb") as file:
         clf = pickle.load(file)
@@ -110,7 +118,7 @@ def classify_json(img, seg, spmask, json_df):
     x = scaler.transform(x)
     # Predict probabilities
     pred_prob = clf.predict_proba(x)[0]
-   # With threshold 0.2 for melanoma, gets labels from probability
+    # With threshold 0.2 for melanoma, gets labels from probability
     threshold = 0.2
     pred_label = int(pred_prob[1] > threshold)
     return pred_label, pred_prob

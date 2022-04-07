@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from measure import measure
+from groupB2_functions import measure
 from tqdm.contrib.concurrent import process_map
 
 
