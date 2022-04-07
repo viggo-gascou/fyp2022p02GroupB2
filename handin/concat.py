@@ -10,6 +10,7 @@ for i, (name, df) in enumerate(zip(names, dfs)):
     df = df.drop(columns=["benign", "keratosis"])
     df["image_id"] = full_df["image_id"]
     df = df[list(df)[-1:] + list(df)[1:-1]]
+    df.rename(columns={"assymetry": "asymmetry"}, inplace=True)
     dfs[i] = df
     full_df = full_df.merge(df, on="image_id", suffixes=(None, f"_{name}"))
 cols = list(full_df)[1:5]
@@ -18,7 +19,7 @@ full_df.rename(columns=renamed, inplace=True)
 full_df.to_csv("manual_classification.csv", index=False)
 
 
-columns = ["melanoma", "assymetry", "border", "color"]
+columns = ["melanoma", "asymmetry", "border", "color"]
 mean_cols = {}
 for col in columns:
     mean_cols[col] = np.mean(
@@ -28,11 +29,8 @@ mean_df = pd.DataFrame(mean_cols)
 
 img_names = list(full_df["image_id"])
 class_df = pd.read_csv("features/labels_example.csv")
-class_df = class_df.loc([img in img_names for img in class_df["image_id"]])
-feature_df = pd.read_csv("../../features/features_example.csv")
-feature_df = feature_df.loc[[img in img_names for img in feature_df["image_id"]]]
-
-feature_df = pd.read_csv("../../features/features_example.csv")
+class_df = class_df.loc[[img in img_names for img in class_df["image_id"]]]
+feature_df = pd.read_csv("features/features_example.csv")
 feature_df = feature_df.loc[[img in img_names for img in feature_df["image_id"]]]
 A = ["asymmetry", "asymmetry_gauss", "border_score"]
 B = ["area", "perimeter", "compactness"]
@@ -80,8 +78,9 @@ C = np.round(np.mean(x[:, C], axis=1) * 10, 1)
 mean_df["asymmetry_class"] = A
 mean_df["border_class"] = B
 mean_df["color_class"] = C
-mean_df["melanoma_class"] = class_df["melanoma"]
+mean_df["melanoma_class"] = class_df["label"]
 mean_df["melanoma_true"] = feature_df["melanoma"]
+mean_df["image_id"] = img_names
 mean_df = mean_df[
     [
         "image_id",

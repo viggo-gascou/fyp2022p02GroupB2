@@ -11,5 +11,5 @@ for img_name in tqdm(list(df["image_id"])):
     img = plt.imread(f"../data/example_image/{img_name}.jpg")
     seg = plt.imread(f"../data/example_segmentation/{img_name}_segmentation.png")
     labels.append(classify(img, seg))
-df["label"] = labels
+df["label"] = labels[0]
 df.to_csv("features/labels_example.csv")

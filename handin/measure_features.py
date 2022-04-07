@@ -43,4 +43,4 @@ if __name__ == "__main__":
     # Changing data type for the integer columns
     types = {k: int for k in ["area", "perimeter", "color_score"]}
     df.astype(types)
-    df.to_csv("../features/features_example.csv", index=False)
+    df.to_csv("features/features_example.csv", index=False)
