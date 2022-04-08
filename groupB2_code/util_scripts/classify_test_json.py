@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from classify import classify_json
+from groupB2_classify import classify_json
 from tqdm.contrib.concurrent import process_map
 from PIL import Image
 

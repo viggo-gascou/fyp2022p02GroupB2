@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from classify import classify
+from groupB2_classify import classify
 from tqdm.contrib.concurrent import process_map
 
 
